@@ -1,38 +1,249 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* General Styling */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f4f4f9;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Navbar Styling */
+nav {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding: 10px 20px;
+  background-color: #343a40; /* Dark Grey */
   color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.App-link {
-  color: #61dafb;
+nav select, nav input, nav button {
+  padding: 10px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+nav input {
+  width: 200px;
+}
+
+nav button {
+  background-color: #495057; /* Medium Grey */
+  color: #ffffff;
+  cursor: pointer;
+}
+
+nav button:hover {
+  background-color: #6c757d; /* Lighter Grey */
+}
+
+/* Main App Container */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hero Section Styling */
+.hero {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.hero .card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.hero .card {
+  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%); /* Gradient Color */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 20px;
+  margin: 10px;
+  flex: 1 1 calc(30% - 20px);
+  text-align: center;
+  color: #343a40; /* Dark Grey for text contrast */
+}
+
+.hero .card img {
+  border-radius: 10px 10px 0 0;
+}
+
+.hero .card h2 {
+  font-size: 1.2em;
+  margin: 10px 0;
+  color: #343a40; /* Dark Grey */
+}
+
+.hero .card p {
+  font-size: 0.9em;
+  color: #6c757d; /* Lighter Grey */
+  margin: 10px 0;
+}
+
+.hero .card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+  .hero .card {
+    flex: 1 1 calc(30% - 20px);
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media (max-width: 768px) {
+  .hero .card {
+    flex: 1 1 calc(45% - 20px);
   }
+}
+
+@media (max-width: 480px) {
+  .hero .card {
+    flex: 1 1 calc(100% - 20px);
+  }
+}
+
+/* Footer Styling */
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #343a40; /* Dark Grey */
+  color: white;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+}
+
+footer .button-container {
+  display: flex;
+  overflow-x: auto;
+  max-width: 300px; /* Adjust based on your layout */
+}
+
+footer button {
+  max-height: 250px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #495057; /* Medium Grey */
+  color: #ffffff;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+footer button:hover {
+  background-color: #6c757d; /* Lighter Grey */
+}
+
+footer button.active {
+  background-color: #6c757d; /* Lighter Grey */
+  cursor: default;
+}
+
+footer select {
+  margin-left: auto;
+}
+
+/* Add styles for the liked items box in Navbar */
+.liked-items-box {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  background-color: #343a40; /* Dark Grey */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.liked-items-box ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.liked-items-box li {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+.liked-items-box li button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.liked-items-box li button:hover {
+  background-color: #d32f2f;
+}
+
+/* App.css */
+
+.like-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #ff0000; /* Color for liked items */
+  transition: color 0.3s;
+}
+
+.like-button .fa-heart {
+  color: #ff0000; /* Color for liked items */
+}
+
+.like-button .fa-heart:hover {
+  color: #ff4d4d; /* Hover color */
+}
+
+footer .pageButton {
+  background-color: #495057; /* Medium Grey */
+  color: #ffffff;
+  cursor: pointer;
 }
