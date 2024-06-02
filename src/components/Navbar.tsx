@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Product } from '../types';
-import { debounce } from 'lodash';
+//import { debounce } from 'lodash';
 
 interface NavbarProps {
   onSearch: (term: string) => void;
@@ -40,7 +40,7 @@ const Navbar = ({ onSearch, onSort, likedItems, onRemoveLikedItem }: NavbarProps
         })
         .catch(error => console.error('Error fetching data:', error));
     }
-  }, 5000);
+  }, 500);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;

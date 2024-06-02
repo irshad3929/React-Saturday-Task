@@ -11,16 +11,7 @@ interface FooterProps {
   resetPage: boolean; // New prop to indicate whether to reset the current page
 }
 
-const Footer = ({
-  onPrev,
-  onNext,
-  onPageSelect,
-  onOffsetChange,
-  offset,
-  totalPages,
-  currentPage,
-  resetPage, // New prop to indicate whether to reset the current page
-}: FooterProps) => {
+const Footer = ({onPrev,onNext,onPageSelect,onOffsetChange,offset, totalPages,currentPage, resetPage,}: FooterProps) => {
   useEffect(() => {
     if (resetPage) {
       onPageSelect(1); // Reset the page to 1 when the resetPage flag is true
@@ -37,16 +28,17 @@ const Footer = ({
       <button onClick={onPrev} disabled={currentPage === 1}>
         Prev
       </button>
-
-      {pageNumbers.map((number) => (
-        <button
-          key={number}
-          onClick={() => onPageSelect(number)}
-          className={currentPage === number ? "active" : ""}
-        >
-          {number}
-        </button>
-      ))}
+      <div className="page-buttons">
+        {pageNumbers.map((number) => (
+          <button
+            key={number}
+            onClick={() => onPageSelect(number)}
+            className={currentPage === number ? "active" : ""}
+          >
+            {number}
+          </button>
+        ))}{" "}
+      </div>
       <button onClick={onNext} disabled={currentPage === totalPages}>
         Next
       </button>

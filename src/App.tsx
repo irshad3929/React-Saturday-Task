@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import "./App.css";
 import { Product } from "./types";
 
+
 const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [originalProducts, setOriginalProducts] = useState<Product[]>([]);
@@ -47,7 +48,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     fetchData(currentPage);
-  }, [currentPage]);
+  }, [currentPage, offset]);
 
   useEffect(() => {
     localStorage.setItem("likedItems", JSON.stringify(likedItems));
@@ -107,7 +108,7 @@ const App: React.FC = () => {
     setCurrentPage(1);
   }, []);
 
-  const getUniqueProducts = (products: Product[]) => {
+  const getUniqueProducts = (products: Product[]) => {  //handle when infinite scroll ,when new data is fetched than sorting function work
     const uniqueProducts: Product[] = [];
     const seenTitles = new Set<string>();
 
@@ -156,6 +157,7 @@ const App: React.FC = () => {
           likedItems={likedItems.map(item => item.id)}
           cache={cache} 
           setCache={setCache} 
+          searchTerm={searchTerm} // Pass searchTerm to Hero
         />
       </div>
       <Footer
@@ -167,11 +169,9 @@ const App: React.FC = () => {
         totalPages={totalPages}
         currentPage={currentPage}
         resetPage={resetPage} // Pass resetPage to Footer
-
       />
     </div>
   );
 };
 
 export default App;
-

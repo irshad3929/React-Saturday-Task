@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import { Product } from '../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
@@ -14,9 +14,12 @@ interface HeroProps {
   likedItems: number[];
   cache: { [key: number]: Product[] };
   setCache: (cache: { [key: number]: Product[] }) => void;
+  searchTerm: string; // Add searchTerm prop
 }
 
-const Hero = ({data,fetchData,currentPage,setCurrentPage,hasMore,  onLikeToggle,  likedItems, cache,  setCache}: HeroProps) => {
+const Hero = ({data,fetchData,currentPage,setCurrentPage,hasMore,onLikeToggle,likedItems,cache,setCache,searchTerm}: HeroProps) => {
+  const heroRef = useRef<HTMLDivElement | null>(null);
+
   // Throttle function
   const throttle = (func: Function, limit: number) => {
     let lastFunc: ReturnType<typeof setTimeout>;
@@ -50,27 +53,36 @@ const Hero = ({data,fetchData,currentPage,setCurrentPage,hasMore,  onLikeToggle,
           [page]: data // Store fetched data in cache
         });
       });
-    }, 5000),
+    }, 3000),
     [fetchData, cache, setCache, data]
   );
 
   const handleScroll = useCallback(() => {
-    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    if (searchTerm) return; // Prevent automatic pagination if search term is active
+    const heroElement = heroRef.current;
+    if (!heroElement) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = heroElement;
     if (scrollTop + clientHeight >= scrollHeight - 5 && hasMore) {
       setCurrentPage(currentPage + 1);
       throttledFetchData(currentPage + 1);
     }
-  }, [currentPage, throttledFetchData, hasMore, setCurrentPage]);
+  }, [currentPage, throttledFetchData, hasMore, setCurrentPage, searchTerm]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    const heroElement = heroRef.current;
+    if (heroElement) {
+      heroElement.addEventListener('scroll', handleScroll);
+    }
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      if (heroElement) {
+        heroElement.removeEventListener('scroll', handleScroll);
+      }
     };
   }, [handleScroll]);
 
   return (
-    <div className="hero">
+    <div className="hero" ref={heroRef} style={{ overflowY: 'auto', maxHeight: '80vh' }}>
       <div className="card-container">
         {data.map((product, ind) => (
           <div className="card" key={`${product.id}-${ind.toString()}`}>
