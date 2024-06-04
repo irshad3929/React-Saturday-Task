@@ -29,7 +29,7 @@ nav {
   padding: 10px 20px;
   background: linear-gradient(to right, #3d9970, #2e8b57);
   color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -125,11 +125,12 @@ nav button:hover {
 }
 
 /* Responsive Adjustments */
-@media (max-width: 1200px) {
+@media (max-width: 1200px) {   
   .hero .card {
-    flex: 1 1 calc(30% - 20px);
+    flex: 1 1 calc(30% - 20px);    
   }
 }
+ 
 
 @media (max-width: 768px) {
   .hero .card {

@@ -11,11 +11,21 @@ interface FooterProps {
   resetPage: boolean; // New prop to indicate whether to reset the current page
 }
 
-const Footer = ({onPrev,onNext,onPageSelect,onOffsetChange,offset, totalPages,currentPage, resetPage,}: FooterProps) => {
+const Footer = ({
+  onPrev,
+  onNext,
+  onPageSelect,
+  onOffsetChange,
+  offset,
+  totalPages,
+  currentPage,
+  resetPage,
+}: FooterProps) => {
   useEffect(() => {
     if (resetPage) {
       onPageSelect(1); // Reset the page to 1 when the resetPage flag is true
     }
+    //onPageSelect(currentPage);
   }, [resetPage, onPageSelect]);
 
   const pageNumbers = [];
@@ -48,9 +58,17 @@ const Footer = ({onPrev,onNext,onPageSelect,onOffsetChange,offset, totalPages,cu
           onChange={(e) => onOffsetChange(Number(e.target.value))}
           value={offset}
         >
-          <option value={10}>10</option>
+          {/* [10,20,60,80].map((i)=><option value=i/>) */}
+          {/* <option value={10}>10</option>
           <option value={20}>20</option>
-          <option value={50}>50</option>
+          <option value={50}>50</option> */}
+         
+         // fix 1 : this issue here
+          {[10, 20, 50,60].map((i) => (
+            <option value={i} key={i}>
+              {i}
+            </option>
+          ))}
         </select>
       </div>
     </footer>

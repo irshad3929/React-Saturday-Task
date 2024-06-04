@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Product } from '../types';
-//import { debounce } from 'lodash';
 
 interface NavbarProps {
   onSearch: (term: string) => void;
@@ -22,6 +21,7 @@ const Navbar = ({ onSearch, onSort, likedItems, onRemoveLikedItem }: NavbarProps
     };
   };
 
+  // class use
   // Debounced for the search handler
   const debouncedSearch = debounce((value: string) => {
     if (searchCache[value]) {
@@ -62,12 +62,24 @@ const Navbar = ({ onSearch, onSort, likedItems, onRemoveLikedItem }: NavbarProps
         placeholder="Search products..."
         onChange={handleSearchChange}
       />
+      <div>
+      <span>Sort by title: </span>
       <select onChange={handleSortChange}>
-        <option value="normal">Sort by</option>
+
+        {/* <option value="normal">Sort by</option> */}
+        {/* <option value="normal">Normal</option>
         <option value="ascending">Ascending</option>
-        <option value="descending">Descending</option>
-        <option value="normal">Normal</option> {/* Add Normal Option */}
+        <option value="descending">Descending</option> */}
+
+        // fix 2: this issue here
+        
+        {['Normal', 'Ascending', 'Descending'].map((option, index) => (
+          <option key={index} value={option.toLowerCase()}>
+            {option}
+          </option> 
+        ))}
       </select>
+      </div>
       <button onClick={toggleLikedItems}>
         ❤️ Likes ({likedItems.length})
       </button>

@@ -12,8 +12,8 @@ interface HeroProps {
   hasMore: boolean;
   onLikeToggle: (id: number) => void;
   likedItems: number[];
-  cache: { [key: number]: Product[] };
-  setCache: (cache: { [key: number]: Product[] }) => void;
+  cache: { [key: number]: Product[] }; // Record<number, Product[]>
+  setCache: (cache: { [key: number]: Product[] }) => void; // same as above
   searchTerm: string; // Add searchTerm prop
 }
 
@@ -22,14 +22,14 @@ const Hero = ({data,fetchData,currentPage,setCurrentPage,hasMore,onLikeToggle,li
 
   // Throttle function
   const throttle = (func: Function, limit: number) => {
-    let lastFunc: ReturnType<typeof setTimeout>;
-    let lastRan: number;
+    let lastFunc: ReturnType<typeof setTimeout>;  // A reference to the most recent setTimeout function call
+    let lastRan: number;    // A timestamp to the last time the function was called
     return (...args: any[]) => {
       if (!lastRan) {
         func(...args);
         lastRan = Date.now();
       } else {
-        clearTimeout(lastFunc);
+        clearTimeout(lastFunc);  // for avoid duplicate calls
         lastFunc = setTimeout(() => {
           if (Date.now() - lastRan >= limit) {
             func(...args);
@@ -69,6 +69,7 @@ const Hero = ({data,fetchData,currentPage,setCurrentPage,hasMore,onLikeToggle,li
     }
   }, [currentPage, throttledFetchData, hasMore, setCurrentPage, searchTerm]);
 
+  // make custome hook to addListner and removeListner
   useEffect(() => {
     const heroElement = heroRef.current;
     if (heroElement) {

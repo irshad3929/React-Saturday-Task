@@ -24,6 +24,7 @@ const App: React.FC = () => {
   const [cache, setCache] = useState<{ [key: number]: Product[] }>({});
 
   const fetchData = useCallback(async (page: number) => {
+    ///// use class here
     try {
       const response = await fetch(`https://dummyjson.com/products?limit=${offset}&skip=${(page - 1) * offset}`);
       const data = await response.json();
@@ -31,7 +32,7 @@ const App: React.FC = () => {
         setProducts((prevProducts) =>
           page === 1 ? data.products : [...prevProducts, ...data.products]
         );
-        setOriginalProducts((prevProducts) =>
+        setOriginalProducts((prevProducts) =>  //maintains the original order for sorting purposes.
           page === 1 ? data.products : [...prevProducts, ...data.products]
         );
         setTotalPages(Math.ceil(data.total / offset));  // total 194 data
@@ -48,9 +49,12 @@ const App: React.FC = () => {
 
   useEffect(() => {
     fetchData(currentPage);
+    //console.log(currentPage)
   }, [currentPage, offset]);
 
+  // make seperated class to get & set dat into it
   useEffect(() => {
+    // make enum for local storage const enum StorageData = {likedKey = 'likedItems'}
     localStorage.setItem("likedItems", JSON.stringify(likedItems));
   }, [likedItems]);
 
@@ -91,11 +95,11 @@ const App: React.FC = () => {
   };
 
   const handlePrev = () => {
-    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));  // Decreases currentPage but not below 1
   };
 
   const handleNext = () => {
-    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));  // Increases currentPage but not above totalPages
   };
 
   const handlePageSelect = useCallback((page: number) => {
@@ -118,8 +122,8 @@ const App: React.FC = () => {
         seenTitles.add(product.title);
       }
     }
-
-    return uniqueProducts;
+     //console.log(uniqueProducts);
+    return uniqueProducts; // Returns an array of unique products by filtering out products with duplicate titles
   };
 
   useEffect(() => {
